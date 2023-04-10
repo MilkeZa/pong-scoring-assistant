@@ -67,7 +67,6 @@ class PingPongSystem:
 
         # Draw and refresh the screens.
         self.draw_screens()
-        self.refresh_screens()
 
     def draw_screens(self) -> None:
         """ Draws the header and body sections to the screens.
@@ -75,9 +74,10 @@ class PingPongSystem:
 
         self.draw_header()
         self.draw_body()
+        self.refresh_screens()
 
     def draw_header(self) -> None:
-        """ Draws the header section to the screen.
+        """ Draws the header section to the screen, showing player number.
         """
 
         # White rectangle showing header area.
@@ -88,7 +88,7 @@ class PingPongSystem:
         self.oled2.text("Player 2", 30, 8)
 
     def draw_body(self) -> None:
-        """ Draws the body section to the screen.
+        """ Draws the body section to the screen, showing player scores.
         """
 
         # White rectangle showing body area.
@@ -188,9 +188,6 @@ class PingPongSystem:
         self.scores_text[player] = score_text
 
         # Refresh the screens to show updated scores.
-        # print("(Player, Score, Score Text)", end=' : ')
-        # print(f"(P1, {self.scores[1]}, {self.scores_text[1]})", end=', ')
-        # print(f"(P2, {self.scores[2]}, {self.scores_text[2]})")
         self.redraw_body()
 
 
@@ -205,7 +202,8 @@ def pps_start() -> None:
         pp_system = PingPongSystem()
 
         while True:
-            # Check for button triggers.
+            # Check for button triggers. If any are set HIGH, reset them to LOW
+            # and handle the logic associated with their needs.
             if pp_system.p1_sub_trigger == 1:
                 pp_system.p1_sub_trigger = 0
                 pp_system.update_scores(1, -1)
